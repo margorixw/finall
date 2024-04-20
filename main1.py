@@ -53,12 +53,16 @@ class Pers(GameSprite):
         elif k[key_left]:
             if self.rect.y >= 0:
                 self.rect.y -= self.speed
+        if k[pygame.K_SPACE]:
+            self.shoot()
 
     def shoot(self):
-        if self.clip > 0:
+            
+        # if self.clip > 0:
         # fire_snd.play()
-            b = Bullet(self.rect.centerx-7, self.rect.y, 15, 20, star_img, 4)
-            self.clip -= 1
+            b = Bullet(self.rect.centerx, self.rect.y, 15, 20, star_img, 4)
+            print (1)
+            # self.clip -= 1
     def reload(self):
         if self.clip <= 0:
             self.clip = 5
@@ -76,11 +80,11 @@ class Enemy(GameSprite):
         self.rect.x -= self.speed
         if self.rect.x <= 0:
             lost += 1
-            print(lost)
+            # print(lost)
             self.rect.x = randint(win_w, win_w+150)
             self.rect.y = randint(0, win_h-self.rect.h)
             self.speed = randint(1, 3)
-            print(self.rect.x, self.rect.y)
+            # print(self.rect.x, self.rect.y)
 
         
 
@@ -93,7 +97,7 @@ class Bullet(GameSprite):
     
     def move(self):
         self.rect.x += self.speed
-        if self.rect.x <= -20:
+        if self.rect.x > 800:
             bullets.remove(self)
     
 font1 = pygame.font.SysFont("Arial", 20)
@@ -198,10 +202,10 @@ while game:
                 hero.rect.x, hero.rect.y = 0, 400
                 for enemy in enemies:
                     enemy.rect.x, enemy.rect.y = randint(win_w, win_w+150), randint(0, win_h-70)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not finish:
-                hero.shoot()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_e and not finish:
-                hero.reload()
+           # if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and not finish:
+              # hero.shoot()
+           # elif event.type == pygame.KEYDOWN and event.key == pygame.K_e and not finish:
+             #   hero.reload()
         propusk = font1.render("Пропущено: "+str(lost), True, (255, 255, 255))
         window.blit(propusk, (10,10))
         killed = font1.render("Вбито: "+str(score), True, (255, 255, 255))
